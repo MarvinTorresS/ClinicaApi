@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.MainViewController"
+            prefWidth="900" prefHeight="550"
+            stylesheets="@/fxml/clinicaStyle.css">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox spacing="10" alignment="TOP_CENTER" styleClass="sidebar">
+            <Label text="🏥 ClínicaApp" styleClass="sidebar-title"/>
+            <Button text="Registrar Paciente" onAction="#showPacienteForm" styleClass="sidebar-btn"/>
+            <Button text="Registrar Clínica" onAction="#showClinicaForm" styleClass="sidebar-btn"/>
+            <Button text="Agendar Cita" onAction="#showCitaForm" styleClass="sidebar-btn"/>
+        </VBox>
+    </left>
+
+    <!-- Contenido dinámico -->
+    <center>
+        <AnchorPane fx:id="contentArea" styleClass="content-area"/>
+    </center>
+</BorderPane>

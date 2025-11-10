@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/13"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.CitaFormController"
+            prefWidth="900" prefHeight="540"
+            stylesheets="@/fxml/clinicaStyle.css">
+
+    <children>
+        <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"
+              AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+            <padding><Insets top="0" right="0" bottom="0" left="0"/></padding>
+
+            <!-- Título -->
+            <Label text="Gestor de Citas" styleClass="title-label"/>
+
+            <!-- Formulario -->
+            <GridPane hgap="10" vgap="8">
+                <columnConstraints>
+                    <!-- Izquierda -->
+                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                    <ColumnConstraints halignment="LEFT"  minWidth="300" hgrow="ALWAYS"/>
+                    <!-- Derecha -->
+                    <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+                    <ColumnConstraints halignment="LEFT"  minWidth="160"/>
+                </columnConstraints>
+
+                <children>
+                    <!-- Columna izquierda: todo lo que se usa al crear -->
+                    <Label text="Paciente:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="cbPaciente" promptText="Seleccione..."
+                              prefWidth="320" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Clínica:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="cbClinica" promptText="Seleccione..."
+                              prefWidth="320" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Fecha:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <DatePicker fx:id="dateCita" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Hora Inicio:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtHoraInicio" promptText="HH:mm (ej. 09:00)"
+                               GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Hora Fin:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtHoraFin" promptText="HH:mm (ej. 10:00)"
+                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label text="Descripción:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtDescripcion" promptText="Motivo, notas, etc."
+                               GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <!-- Columna derecha: estado/Id (administrativo) -->
+                    <Label text="Estado:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                    <ComboBox fx:id="cbEstado" promptText="PENDIENTE"
+                              GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                    <Label text="Id:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                    <TextField fx:id="txtIdCita" editable="false"
+                               GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                </children>
+            </GridPane>
+
+            <!-- Botones CRUD -->
+            <HBox spacing="8">
+                <Button text="Nuevo"      onAction="#onNuevo"/>
+                <Button text="Guardar"    onAction="#onGuardar"   defaultButton="true"/>
+                <Button text="Actualizar" onAction="#onActualizar"/>
+                <Button text="Eliminar"   onAction="#onEliminar"/>
+                <Button text="Limpiar"    onAction="#onLimpiar"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Verificar disponibilidad" onAction="#onVerificarDisponibilidad"/>
+            </HBox>
+
+            <!-- Filtros -->
+            <HBox spacing="8">
+                <Label text="Filtro:"/>
+                <TextField fx:id="txtFiltroPaciente" promptText="Paciente (contiene)" prefWidth="220"/>
+                <ComboBox fx:id="cbFiltroClinica" promptText="Clínica" prefWidth="200"/>
+                <DatePicker fx:id="dpFiltroFecha" promptText="Fecha"/>
+                <Button text="Aplicar" onAction="#onAplicarFiltros"/>
+                <Button text="Limpiar" onAction="#onLimpiarFiltros"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Refrescar" onAction="#onRefrescar"/>
+            </HBox>
+
+            <!-- Tabla -->
+            <TableView fx:id="tblCitas" VBox.vgrow="ALWAYS" fixedCellSize="28.0" prefHeight="300">
+                <placeholder><Label text="Sin citas para mostrar"/></placeholder>
+                <columns>
+                    <TableColumn fx:id="tcId" text="Id" prefWidth="70" minWidth="60" maxWidth="100"/>
+                    <TableColumn fx:id="tcPaciente" text="Paciente" prefWidth="160" minWidth="130"/>
+                    <TableColumn fx:id="tcClinica" text="Clínica" prefWidth="160" minWidth="130"/>
+                    <TableColumn fx:id="tcFecha" text="Fecha" prefWidth="100" minWidth="90"/>
+                    <TableColumn fx:id="tcInicio" text="Inicio" prefWidth="80" minWidth="70"/>
+                    <TableColumn fx:id="tcFin" text="Fin" prefWidth="80" minWidth="70"/>
+                    <TableColumn fx:id="tcEstado" text="Estado" prefWidth="100" minWidth="90"/>
+                    <TableColumn fx:id="tcDescripcion" text="Descripción" prefWidth="220" minWidth="150"/>
+                </columns>
+                <contextMenu>
+                    <ContextMenu>
+                        <items>
+                            <MenuItem text="Editar selección" onAction="#onEditarSeleccion"/>
+                            <MenuItem text="Eliminar selección" onAction="#onEliminarSeleccion"/>
+                        </items>
+                    </ContextMenu>
+                </contextMenu>
+            </TableView>
+
+            <!-- Estado -->
+            <Label fx:id="lblEstado" text="" styleClass="status-label"/>
+        </VBox>
+    </children>
+</AnchorPane>
